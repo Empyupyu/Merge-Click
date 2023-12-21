@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3fe7e89122d2c4799cdc1017388f12, type: 3}
+  m_Name: AnimalsConfigData
+  m_EditorClassIdentifier: 
+  <Animals>k__BackingField:
+  - {fileID: -3963326909258707582, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
+  - {fileID: -8534904579122402683, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}
+  - {fileID: 1058610381597674363, guid: 4aa01f1d5c72d4e47a8c44e612a6b6fc, type: 3}
+  - {fileID: 7299855444742487758, guid: 8cb75dc2fdd63734988b8358f1314d25, type: 3}
+  - {fileID: 4909093782988295355, guid: 252ba5fa5d8167e42af72cf97baa830e, type: 3}
+  - {fileID: -4843018145209057286, guid: ad4137f595ec8e2449cacca9df7d3735, type: 3}
+  - {fileID: -4552668992161509488, guid: 818c5a1ba0d9810439f11299463f2294, type: 3}
+  - {fileID: -6489127087110296047, guid: 5b5c678f31981e34f9122b87217da1ac, type: 3}
