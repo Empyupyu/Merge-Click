@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3fe7e89122d2c4799cdc1017388f12, type: 3}
   m_Name: AnimalsConfigData
   m_EditorClassIdentifier: 
+  <AnimalsInPreview>k__BackingField: 3
+  <OffsetPerAnimalInRow>k__BackingField: 0.25
+  <AnimalsInPreviewScale>k__BackingField: {x: 0.35, y: 0.35, z: 0.35}
+  <AnimalsInPreviewPosition>k__BackingField: {x: 3, y: 4, z: 0}
   <Animals>k__BackingField:
   - {fileID: -3963326909258707582, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
   - {fileID: -8534904579122402683, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}

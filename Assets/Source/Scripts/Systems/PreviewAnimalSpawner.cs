@@ -1,33 +1,29 @@
+using DG.Tweening;
+using System.Linq;
 using UnityEngine;
 using Zenject;
-
-public class AnimalSelecter : GameSystem
+public class GameOverChecker : GameSystem
 {
     public override void OnAwake()
     {
-       
+        _game.OnAnimalDeselectedSingal.AddListener(CheckAnimalPosition);   
     }
 
-    private void Select()
+    private void CheckAnimalPosition()
     {
-        _game.CurrentAnimal = _game.PreviewAnimals.Dequeue();
-    }
 
-    private void DeSelect()
-    {
-        _game.CurrentAnimal = null;
     }
 }
-
 public class PreviewAnimalSpawner : GameSystem
 {
     [Inject] private readonly AnimalConfigData _animalConfigData;
 
     public override void OnAwake()
     {
+        _game.OnAnimalDeselectedSingal.AddListener(Sorting);
+
         PreLoad();
     }
-
 
     private void PreLoad()
     {
@@ -36,7 +32,22 @@ public class PreviewAnimalSpawner : GameSystem
             Spawn();
         }
 
+        _game.OnAnimalSpawnedSingal.Dispatch();
 
+        Sorting();
+    }
+
+    private void Sorting()
+    {
+        for (int i = 0; i < _game.PreviewAnimals.Count; i++)
+        {
+            var animal = _game.PreviewAnimals.ElementAt(i);
+
+            var previewPosition = _animalConfigData.AnimalsInPreviewPosition;
+            animal.transform.DOMove(new Vector3(previewPosition.x + (i * _animalConfigData.OffsetPerAnimalInRow), previewPosition.y, previewPosition.z), _animalConfigData.SortingDuration).SetEase(Ease.OutBack);
+        }
+
+        Spawn();
     }
 
     private void Spawn()
@@ -44,7 +55,8 @@ public class PreviewAnimalSpawner : GameSystem
         var animals = _animalConfigData.Animals;
         var animalPrefab = animals[Random.Range(0, animals.Count)];
 
-        var newAnimal = Instantiate(animalPrefab, new Vector3(2 + (_game.PreviewAnimals.Count * .2f), 2f, 0), Quaternion.identity);
+        var previewPosition = _animalConfigData.AnimalsInPreviewPosition;
+        var newAnimal = Instantiate(animalPrefab, new Vector3(previewPosition.x + (_game.PreviewAnimals.Count * _animalConfigData.OffsetPerAnimalInRow), previewPosition.y, previewPosition.z), Quaternion.Euler(0, 180, 0));
         newAnimal.transform.localScale = _animalConfigData.AnimalsInPreviewScale;
 
         _game.PreviewAnimals.Enqueue(newAnimal);
