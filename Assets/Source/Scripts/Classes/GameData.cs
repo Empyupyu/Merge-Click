@@ -8,4 +8,5 @@ public class GameData
 
     public OnAnimalSpawnedSingal OnAnimalSpawnedSingal = Signals.Get<OnAnimalSpawnedSingal>(); 
     public OnAnimalDeselectedSingal OnAnimalDeselectedSingal = Signals.Get<OnAnimalDeselectedSingal>();
+    public MergingSingal MergingSingal = Signals.Get<MergingSingal>();
 }

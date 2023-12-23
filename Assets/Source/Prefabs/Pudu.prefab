@@ -605,6 +605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Rigidbody>k__BackingField: {fileID: 5266865251040020503}
   <Collider>k__BackingField: {fileID: -1155217969533666731}
+  <AnimalType>k__BackingField: 4
 --- !u!1 &5512041106863543837
 GameObject:
   m_ObjectHideFlags: 0

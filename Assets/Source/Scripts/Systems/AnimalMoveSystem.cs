@@ -3,7 +3,14 @@ using Zenject;
 
 public class AnimalMoveSystem : GameSystem
 {
-    [Inject] private MovingConfigData _movingConfigData;
+    [Inject] private readonly MovingConfigData _movingConfigData;
+
+    private Camera _camera;
+
+    public override void OnAwake()
+    {
+        _camera = Camera.main;
+    }
 
     public override void OnUpdate()
     {
@@ -14,9 +21,15 @@ public class AnimalMoveSystem : GameSystem
     {
         if (_game.CurrentAnimal == null) return;
 
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _game.CurrentAnimal.transform.position = Vector3.MoveTowards(_game.CurrentAnimal.transform.position, GetOffsetWorldPointPosition(), _movingConfigData.MoveSpeed * Time.deltaTime);
+    }
+
+    private Vector3 GetOffsetWorldPointPosition()
+    {
+        Vector3 worldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
         worldPos.y = _movingConfigData.MovingOffset.y;
         worldPos.z = _movingConfigData.MovingOffset.z;
-        _game.CurrentAnimal.transform.position = Vector3.MoveTowards(_game.CurrentAnimal.transform.position, worldPos, _movingConfigData.MoveSpeed * Time.deltaTime);
+
+        return worldPos;
     }
 }

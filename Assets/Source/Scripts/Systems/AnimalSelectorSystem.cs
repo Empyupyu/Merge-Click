@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class AnimalSelector : GameSystem
+public class AnimalSelectorSystem : GameSystem
 {
     public override void OnAwake()
     {
