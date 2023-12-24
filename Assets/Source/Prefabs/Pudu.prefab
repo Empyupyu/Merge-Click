@@ -603,9 +603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10aa96dfaa851dc43b0c4c849591e6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
   <Rigidbody>k__BackingField: {fileID: 5266865251040020503}
   <Collider>k__BackingField: {fileID: -1155217969533666731}
-  <AnimalType>k__BackingField: 4
 --- !u!1 &5512041106863543837
 GameObject:
   m_ObjectHideFlags: 0

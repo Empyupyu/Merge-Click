@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class Animal : MonoBehaviour
 {
+    [field: SerializeField] public int ID { get; private set; }
     [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
     [field: SerializeField] public Collider Collider { get; private set; }
-    [field: SerializeField] public AnimalType AnimalType { get; private set; }
 
     private MergingSingal _mergingSingal;
     private bool _isMerge;
+
+    public void Initialize(int id)
+    {
+        ID = id;
+    }
 
     public void Merge()
     {
@@ -19,7 +24,7 @@ public class Animal : MonoBehaviour
     {
         if (_isMerge) return;
         if (!collision.collider.TryGetComponent<Animal>(out var animal)) return;
-        if (!animal.AnimalType.Equals(AnimalType)) return;
+        if (!animal.ID.Equals(ID)) return;
 
         Merge();
         animal.Merge();

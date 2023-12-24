@@ -1,30 +1,58 @@
 ﻿using DG.Tweening;
-using ModestTree;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+
 public class MergeSystem : GameSystem
 {
+    public event Action OnMergeEvent;
+
     [Inject] private readonly AnimalEvolutionConfigData _animalEvolutionConfigData;
+
+    private Dictionary<int, EvolutionStage> EvolutionStages;
 
     public override void OnAwake()
     {
+        InitializeAnimalEvolution();
+
         _game.MergingSingal.AddListener(Merge);
     }
 
-    private void Merge(Animal collision, Animal target)
+    private void InitializeAnimalEvolution()
+    {
+        EvolutionStages = new Dictionary<int, EvolutionStage>();
+
+        for (int i = 0; i < _animalEvolutionConfigData.EvolutionStage.Length; i++)
+        {
+            var stage = _animalEvolutionConfigData.EvolutionStage[i];
+            stage.Animal.Initialize(i);
+            EvolutionStages.Add(i, stage);
+        }
+    }
+
+    private void DisablePhysicToAnimal(Animal collision, Animal target)
     {
         collision.Collider.enabled = false;
         target.Collider.enabled = false;
         collision.Rigidbody.isKinematic = true;
         target.Rigidbody.isKinematic = true;
+    }
 
-        EvolutionStage evolution = _animalEvolutionConfigData.EvolutionStage.FirstOrDefault(e => e.AnimalType.Equals(collision.AnimalType));
-        int nextEvolutionStageID = _animalEvolutionConfigData.EvolutionStage.IndexOf(evolution) + 1;
+    private void Merge(Animal collision, Animal target)
+    {
+        DisablePhysicToAnimal(collision, target);
 
-        if (nextEvolutionStageID >= _animalEvolutionConfigData.EvolutionStage.Length) return;
+        int nextEvolutionStageID = collision.ID + 1;
+        if (nextEvolutionStageID >= _animalEvolutionConfigData.EvolutionStage.Length)
+        {
+            //Explosion
+            collision.gameObject.SetActive(false);
+            target.gameObject.SetActive(false);
+            return;
+        }
 
-        evolution = _animalEvolutionConfigData.EvolutionStage[nextEvolutionStageID];
+        EvolutionStage evolution = EvolutionStages[nextEvolutionStageID];
         Vector3 centerByTwoAnimal = (collision.transform.position + target.transform.position) / 2;
 
         target.transform.DOScale(0, .4f).SetEase(Ease.InBack);
@@ -37,8 +65,14 @@ public class MergeSystem : GameSystem
 
             var evolutionAnimal = Instantiate(evolution.Animal, centerByTwoAnimal, Quaternion.Euler(0, 180, 0));
 
+            evolutionAnimal.Initialize(nextEvolutionStageID);
             evolutionAnimal.Collider.isTrigger = false;
             evolutionAnimal.Rigidbody.isKinematic = false;
+
+            _game.Score += 50;
+            _save.RecordScore = _game.Score > _save.RecordScore ? _game.Score : _save.RecordScore;
+
+            OnMergeEvent?.Invoke();
         });
     }
 }
