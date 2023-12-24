@@ -5,6 +5,7 @@ public class GameData
 {
     public Animal CurrentAnimal;
     public Queue<Animal> PreviewAnimals = new Queue<Animal>();
+    public Level Level;
 
     public OnAnimalSpawnedSingal OnAnimalSpawnedSingal = Signals.Get<OnAnimalSpawnedSingal>(); 
     public OnAnimalDeselectedSingal OnAnimalDeselectedSingal = Signals.Get<OnAnimalDeselectedSingal>();

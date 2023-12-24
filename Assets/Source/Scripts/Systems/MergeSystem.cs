@@ -3,7 +3,6 @@ using ModestTree;
 using System.Linq;
 using UnityEngine;
 using Zenject;
-
 public class MergeSystem : GameSystem
 {
     [Inject] private readonly AnimalEvolutionConfigData _animalEvolutionConfigData;
