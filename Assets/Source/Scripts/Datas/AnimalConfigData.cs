@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "AnimalsConfigData", menuName = "Configs/AnimalsConfig")]
 public class AnimalConfigData : ScriptableObject
 {

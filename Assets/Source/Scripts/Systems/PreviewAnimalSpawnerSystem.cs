@@ -52,7 +52,7 @@ public class PreviewAnimalSpawnerSystem : GameSystem
 
     private Vector3 GetPositionOffsetByIndex(int index)
     {
-        var previewPosition = _animalConfigData.AnimalsInPreviewPosition;
+        var previewPosition = _game.Level.PreviewPoint.transform.position;
         return new Vector3(previewPosition.x + (index * _animalConfigData.OffsetPerAnimalInRow), previewPosition.y, previewPosition.z);
     }
 }

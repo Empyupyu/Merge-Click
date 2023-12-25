@@ -2,10 +2,13 @@
 using Lean.Pool;
 using System;
 using UnityEngine;
+using Zenject;
 
 public class MergeSystem : GameSystem
 {
     public event Action OnMergeEvent;
+
+    [Inject] private readonly MergeConfigData _mergeConfigData;
 
     public override void OnAwake()
     {
@@ -29,22 +32,22 @@ public class MergeSystem : GameSystem
 
     private void ScalingAnimation(Transform target)
     {
-        target.DOScale(0, .4f).SetEase(Ease.InBack);
+        target.DOScale(0, _mergeConfigData.MergeScalingDuration).SetEase(Ease.InBack);
     }
 
     private void MergingAnimaion(Animal collision, Animal target)
     {
         Vector3 centerByTwoAnimal = (collision.transform.position + target.transform.position) / 2;
 
-        target.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack);
-        collision.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack).OnComplete(() =>
+        target.transform.DOMove(centerByTwoAnimal, _mergeConfigData.MergeMoveDuration).SetEase(Ease.OutBack);
+        collision.transform.DOMove(centerByTwoAnimal, _mergeConfigData.MergeMoveDuration).SetEase(Ease.OutBack).OnComplete(() =>
         {
             BackToPool(collision);
             BackToPool(target);
 
             int nextEvolutionStageID = collision.ID + 1;
             bool canEvolution = nextEvolutionStageID < _game.EvolutionStages.Count;
-            int rewardScore = canEvolution ? 50 : 250;
+            int rewardScore = canEvolution ? _mergeConfigData.RewardNormalScore : _mergeConfigData.RewardLastEvolutionScore;
 
             if (canEvolution)
             {
@@ -58,6 +61,7 @@ public class MergeSystem : GameSystem
                 evolutionAnimal.Rigidbody.isKinematic = false;
             }
 
+            LeanPool.Spawn(_mergeConfigData.MergeEffect, centerByTwoAnimal, Quaternion.identity);
             AddScorePoint(rewardScore);
 
             OnMergeEvent?.Invoke();

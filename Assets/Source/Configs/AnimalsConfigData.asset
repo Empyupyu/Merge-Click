@@ -35,4 +35,4 @@ MonoBehaviour:
   - <Animal>k__BackingField: {fileID: 4909093782988295355, guid: 252ba5fa5d8167e42af72cf97baa830e, type: 3}
   - <Animal>k__BackingField: {fileID: -6382600277182566660, guid: ff8769824a837fb44b2d8b3dd57ea288, type: 3}
   - <Animal>k__BackingField: {fileID: -4552668992161509488, guid: 818c5a1ba0d9810439f11299463f2294, type: 3}
-  <MaximumEvolutionStageLevelInPreview>k__BackingField: 3
+  <MaximumEvolutionStageLevelInPreview>k__BackingField: 4
