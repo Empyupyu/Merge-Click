@@ -9,6 +9,7 @@ public class GameData
     public List<Timer> Timers = new List<Timer>();
     public Level Level;
     public int Score;
+    public bool GameOver;
 
     public OnAnimalSpawnedSingal OnAnimalSpawnedSingal = Signals.Get<OnAnimalSpawnedSingal>(); 
     public OnAnimalDeselectedSingal OnAnimalDeselectedSingal = Signals.Get<OnAnimalDeselectedSingal>();

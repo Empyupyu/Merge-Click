@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MergeConfigData
   m_EditorClassIdentifier: 
   <MergeEffect>k__BackingField: {fileID: 198927480420149238, guid: b395d5d6eb4b4b846acc021ee036b744, type: 3}
+  <MergeEffectOffset>k__BackingField: {x: 0, y: 0, z: -3}
   <MergeMoveDuration>k__BackingField: 0.3
   <MergeScalingDuration>k__BackingField: 0.4
   <RewardNormalScore>k__BackingField: 50
   <RewardLastEvolutionScore>k__BackingField: 250
+  <MereSoundEffect>k__BackingField: {fileID: 8300000, guid: d27697ec2fa9dcf41bad57ac7580d9fe, type: 3}

@@ -13,6 +13,7 @@ public class AnimalSelectorSystem : GameSystem
         if (Input.GetMouseButtonDown(0))
         {
             if (_game.CurrentAnimal == null) return;
+            if (_game.GameOver) return;
 
             DeSelect();
         }

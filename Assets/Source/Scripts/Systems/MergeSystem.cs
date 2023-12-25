@@ -61,7 +61,9 @@ public class MergeSystem : GameSystem
                 evolutionAnimal.Rigidbody.isKinematic = false;
             }
 
-            LeanPool.Spawn(_mergeConfigData.MergeEffect, centerByTwoAnimal, Quaternion.identity);
+            LeanPool.Spawn(_mergeConfigData.MergeEffect, centerByTwoAnimal + _mergeConfigData.MergeEffectOffset, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(_mergeConfigData.MereSoundEffect, centerByTwoAnimal);
+
             AddScorePoint(rewardScore);
 
             OnMergeEvent?.Invoke();

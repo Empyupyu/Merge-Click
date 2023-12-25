@@ -1,4 +1,6 @@
-﻿using Zenject;
+﻿using DG.Tweening;
+using UnityEngine;
+using Zenject;
 public class ScorePresenter : IInitializable
 {
     private MergeSystem _mergeSystem;
@@ -23,7 +25,15 @@ public class ScorePresenter : IInitializable
 
     private void UpdateScoreText()
     {
-        _scoreView.ScoreText.text = "Score: " + _game.Score;
-        _scoreView.RecordScoreText.text = "Record: " + _save.RecordScore;
+        ShakeTextScale(_scoreView.ScoreText.transform);
+
+        _scoreView.ScoreText.text = _game.Score.ToString();
+        _scoreView.RecordScoreText.text = _save.RecordScore.ToString();
+    }
+
+    private void ShakeTextScale(Transform text)
+    {
+        text.DORewind();
+        text.DOShakeScale(.15f, .1f);
     }
 }

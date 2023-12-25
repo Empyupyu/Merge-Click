@@ -29,6 +29,12 @@ public class GameOverSystem : GameSystem
 
     private void GameOver()
     {
+        _game.MergingSingal.Clear();
+        _game.OnAnimalSpawnedSingal.Clear();
+        _game.OnAnimalDeselectedSingal.Clear();
+
+        _game.GameOver = true;
+
         OnGameOverEvent?.Invoke();
         RemoveGameOverListener();
     }

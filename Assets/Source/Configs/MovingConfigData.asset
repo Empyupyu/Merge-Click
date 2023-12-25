@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b1b1df17bdd8847bc5b6bfb7eaeded, type: 3}
   m_Name: MovingConfigData
   m_EditorClassIdentifier: 
-  <MovingOffset>k__BackingField: {x: 0, y: 4, z: 0}
+  <MovingOffset>k__BackingField: {x: 0, y: 3, z: 0}
+  <MovingPositionClampMinimumX>k__BackingField: -2
+  <MovingPositionClampMaximumX>k__BackingField: 2
   <MoveSpeed>k__BackingField: 17.5

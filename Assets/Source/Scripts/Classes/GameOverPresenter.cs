@@ -22,6 +22,7 @@ public class GameOverPresenter : IInitializable
 
     private void OpenGameOverWindow()
     {
+        _gameOverSystem.OnGameOverEvent -= OpenGameOverWindow;
         _gameOverView.gameObject.SetActive(true);
         _gameOverView.RestartButton.onClick.AddListener(_gameOverSystem.RestartGame);
 
@@ -30,7 +31,7 @@ public class GameOverPresenter : IInitializable
 
     private void UpdateScoreText()
     {
-        _gameOverView.ScoreText.text = "Score: " + _game.Score;
-        _gameOverView.RecordScoreText.text = "Record: " + _save.RecordScore;
+        _gameOverView.ScoreText.text = _game.Score.ToString();
+        _gameOverView.RecordScoreText.text = _save.RecordScore.ToString();
     }
 }
