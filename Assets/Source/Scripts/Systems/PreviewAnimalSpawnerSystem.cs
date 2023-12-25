@@ -37,8 +37,8 @@ public class PreviewAnimalSpawnerSystem : GameSystem
 
     private void Spawn()
     {
-        var animals = _animalConfigData.Animals;
-        var animalPrefab = animals[Random.Range(0, animals.Count)];
+        var evolutions = _animalConfigData.EvolutionStage;
+        var animalPrefab = evolutions[Random.Range(0, evolutions.Length)].Animal;
 
         var positionByIndex = GetPositionOffsetByIndex(_game.PreviewAnimals.Count);
         var newAnimal = Instantiate(animalPrefab, positionByIndex, Quaternion.Euler(0, 180, 0));

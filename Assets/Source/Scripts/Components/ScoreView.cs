@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-
 public class ScoreView : MonoBehaviour
 {
     [field: SerializeField] public TextMeshProUGUI ScoreText { get; private set; }
