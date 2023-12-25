@@ -1,6 +1,8 @@
 ﻿using DG.Tweening;
+using Lean.Pool;
 using System;
 using UnityEngine;
+
 public class MergeSystem : GameSystem
 {
     public event Action OnMergeEvent;
@@ -20,38 +22,9 @@ public class MergeSystem : GameSystem
     {
         DisablePhysicToAnimal(collision);
         DisablePhysicToAnimal(target);
-
-        int nextEvolutionStageID = collision.ID + 1;
-        if (nextEvolutionStageID >= _game.EvolutionStages.Count)
-        {
-            //Explosion
-            AddScorePoint(250);
-            BackToPool(collision);
-            BackToPool(target);
-            OnMergeEvent?.Invoke();
-            return;
-        }
-
         ScalingAnimation(target.transform);
         ScalingAnimation(collision.transform);
-
-        Vector3 centerByTwoAnimal = (collision.transform.position + target.transform.position) / 2;
-        target.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack);
-        collision.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack).OnComplete(() =>
-        {
-            BackToPool(collision);
-            BackToPool(target);
-
-            EvolutionStage evolution = _game.EvolutionStages[nextEvolutionStageID];
-            var evolutionAnimal = Instantiate(evolution.Animal, centerByTwoAnimal, Quaternion.Euler(0, 180, 0));
-
-            evolutionAnimal.Initialize(nextEvolutionStageID);
-            evolutionAnimal.Collider.isTrigger = false;
-            evolutionAnimal.Rigidbody.isKinematic = false;
-
-            AddScorePoint(50); 
-            OnMergeEvent?.Invoke();
-        });
+        MergingAnimaion(collision, target);
     }
 
     private void ScalingAnimation(Transform target)
@@ -59,9 +32,41 @@ public class MergeSystem : GameSystem
         target.DOScale(0, .4f).SetEase(Ease.InBack);
     }
 
+    private void MergingAnimaion(Animal collision, Animal target)
+    {
+        Vector3 centerByTwoAnimal = (collision.transform.position + target.transform.position) / 2;
+
+        target.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack);
+        collision.transform.DOMove(centerByTwoAnimal, .3f).SetEase(Ease.OutBack).OnComplete(() =>
+        {
+            BackToPool(collision);
+            BackToPool(target);
+
+            int nextEvolutionStageID = collision.ID + 1;
+            bool canEvolution = nextEvolutionStageID < _game.EvolutionStages.Count;
+            int rewardScore = canEvolution ? 50 : 250;
+
+            if (canEvolution)
+            {
+                EvolutionStage evolution = _game.EvolutionStages[nextEvolutionStageID];
+                var evolutionAnimal = LeanPool.Spawn(evolution.Animal, centerByTwoAnimal, Quaternion.Euler(0, 180, 0));
+
+                evolutionAnimal.Initialize(nextEvolutionStageID);
+                evolutionAnimal.ResetToOrigin();
+
+                evolutionAnimal.Collider.isTrigger = false;
+                evolutionAnimal.Rigidbody.isKinematic = false;
+            }
+
+            AddScorePoint(rewardScore);
+
+            OnMergeEvent?.Invoke();
+        });
+    }
+
     private void BackToPool(Animal animal)
     {
-        animal.gameObject.SetActive(false);
+        LeanPool.Despawn(animal);
     }
 
     private void AddScorePoint(int value)

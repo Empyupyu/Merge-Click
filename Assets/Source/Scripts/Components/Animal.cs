@@ -20,6 +20,12 @@ public class Animal : MonoBehaviour
         _isMerge = true;
     }
 
+    public void ResetToOrigin()
+    {
+        Collider.enabled = true;
+        _isMerge = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (_isMerge) return;

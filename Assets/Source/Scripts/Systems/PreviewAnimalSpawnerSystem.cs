@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Lean.Pool;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -38,10 +39,11 @@ public class PreviewAnimalSpawnerSystem : GameSystem
     private void Spawn()
     {
         var evolutions = _animalConfigData.EvolutionStage;
-        var animalPrefab = evolutions[Random.Range(0, evolutions.Length)].Animal;
+        var animalPrefab = evolutions[Random.Range(0, _animalConfigData.MaximumEvolutionStageLevelInPreview)].Animal;
 
         var positionByIndex = GetPositionOffsetByIndex(_game.PreviewAnimals.Count);
-        var newAnimal = Instantiate(animalPrefab, positionByIndex, Quaternion.Euler(0, 180, 0));
+        var newAnimal = LeanPool.Spawn(animalPrefab, positionByIndex, Quaternion.Euler(0, 180, 0));
+        newAnimal.ResetToOrigin();
 
         newAnimal.transform.DOScale(_animalConfigData.AnimalsInPreviewScale.x, _animalConfigData.SortingDuration).From(Vector3.zero);
 
