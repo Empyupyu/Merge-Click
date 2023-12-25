@@ -101,6 +101,30 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 47
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 47
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1459,73 +1483,73 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      icons_0: 623923338
       icons_1: 1428434215
-      icons_10: 240973750
-      icons_11: -1175052177
-      icons_12: -1102952758
-      icons_13: -432762466
-      icons_14: 1065491931
-      icons_15: 23211426
-      icons_16: 194516358
-      icons_17: -1136330797
-      icons_18: 1705224159
-      icons_19: -1915569301
-      icons_2: 1568163226
-      icons_20: 1436700712
-      icons_21: 1329582384
-      icons_22: 1743829112
-      icons_23: -1245454884
-      icons_24: 169926648
-      icons_25: -1611400383
-      icons_26: -884135464
-      icons_27: -358728841
-      icons_28: 2057210695
-      icons_29: -169667091
-      icons_3: -646594873
-      icons_30: -605451496
-      icons_31: -1737005464
+      icons_54: -2031943772
+      icons_58: -1456206552
+      icons_61: -963367924
       icons_32: -1298529376
-      icons_33: -374776885
-      icons_34: 338572285
-      icons_35: 1781341979
+      icons_0: 623923338
+      icons_50: 236863849
       icons_36: -465179252
-      icons_37: 1404914503
-      icons_38: 920766858
-      icons_39: -732196714
-      icons_4: -1095917349
-      icons_40: -158120734
-      icons_41: 1859255817
+      icons_23: -1245454884
+      icons_46: -1980229905
+      icons_6: -885489514
+      icons_12: -1102952758
+      icons_9: -1402544341
+      icons_28: 2057210695
+      icons_26: -884135464
+      icons_30: -605451496
       icons_42: 1985408668
+      icons_16: 194516358
+      icons_20: 1436700712
+      icons_31: -1737005464
+      icons_22: 1743829112
+      icons_66: 1889374959
+      icons_39: -732196714
+      icons_17: -1136330797
+      icons_2: 1568163226
+      icons_48: 585716144
+      icons_3: -646594873
+      icons_11: -1175052177
+      icons_37: 1404914503
+      icons_29: -169667091
+      icons_51: -2128426095
       icons_43: 1779344737
       icons_44: 1605627477
-      icons_45: 1336561255
-      icons_46: -1980229905
-      icons_47: 1064545691
-      icons_48: 585716144
-      icons_49: 1562637629
       icons_5: 1596636647
-      icons_50: 236863849
-      icons_51: -2128426095
-      icons_52: 551799492
-      icons_53: 1880910556
-      icons_54: -2031943772
-      icons_55: -580322118
-      icons_56: -471834160
-      icons_57: -473253793
-      icons_58: -1456206552
-      icons_59: 79209494
-      icons_6: -885489514
-      icons_60: -464870043
-      icons_61: -963367924
-      icons_62: 1992887452
-      icons_63: 507577078
+      icons_13: -432762466
+      icons_47: 1064545691
+      icons_18: 1705224159
+      icons_14: 1065491931
+      icons_40: -158120734
+      icons_21: 1329582384
+      icons_4: -1095917349
+      icons_24: 169926648
       icons_64: -1123514087
-      icons_65: 1016310556
-      icons_66: 1889374959
-      icons_7: 910685963
+      icons_10: 240973750
+      icons_38: 920766858
+      icons_35: 1781341979
+      icons_62: 1992887452
+      icons_41: 1859255817
+      icons_19: -1915569301
+      icons_52: 551799492
+      icons_55: -580322118
+      icons_59: 79209494
       icons_8: -2134627542
-      icons_9: -1402544341
+      icons_56: -471834160
+      icons_53: 1880910556
+      icons_65: 1016310556
+      icons_60: -464870043
+      icons_63: 507577078
+      icons_7: 910685963
+      icons_15: 23211426
+      icons_33: -374776885
+      icons_25: -1611400383
+      icons_49: 1562637629
+      icons_27: -358728841
+      icons_45: 1336561255
+      icons_57: -473253793
+      icons_34: 338572285
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

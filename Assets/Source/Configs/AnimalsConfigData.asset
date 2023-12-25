@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AnimalsInPreview>k__BackingField: 3
   <OffsetPerAnimalInRow>k__BackingField: 0.25
-  <SortingDuration>k__BackingField: 0
+  <SortingDuration>k__BackingField: 0.3
   <AnimalsInPreviewScale>k__BackingField: {x: 0.35, y: 0.35, z: 0.35}
   <AnimalsInPreviewPosition>k__BackingField: {x: 3, y: 4, z: 0}
   <EvolutionStage>k__BackingField:
   - <Animal>k__BackingField: {fileID: 1058610381597674363, guid: 4aa01f1d5c72d4e47a8c44e612a6b6fc, type: 3}
   - <Animal>k__BackingField: {fileID: -8534904579122402683, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}
-  - <Animal>k__BackingField: {fileID: -7092237855292424185, guid: 29c8e8b72d6b997439fc87d40dd209a6, type: 3}
   - <Animal>k__BackingField: {fileID: 5768740059456722930, guid: f1019a8c3ba688a40a80350608a11919, type: 3}
+  - <Animal>k__BackingField: {fileID: -7092237855292424185, guid: 29c8e8b72d6b997439fc87d40dd209a6, type: 3}
   - <Animal>k__BackingField: {fileID: 8784013875518998326, guid: f2d37b34e3e70a545afb6ca990777dd6, type: 3}
   - <Animal>k__BackingField: {fileID: 7299855444742487758, guid: 8cb75dc2fdd63734988b8358f1314d25, type: 3}
   - <Animal>k__BackingField: {fileID: -3951955602860480582, guid: abccdd54d4c46a14b81c058539a0f6c8, type: 3}
@@ -35,4 +35,4 @@ MonoBehaviour:
   - <Animal>k__BackingField: {fileID: 4909093782988295355, guid: 252ba5fa5d8167e42af72cf97baa830e, type: 3}
   - <Animal>k__BackingField: {fileID: -6382600277182566660, guid: ff8769824a837fb44b2d8b3dd57ea288, type: 3}
   - <Animal>k__BackingField: {fileID: -4552668992161509488, guid: 818c5a1ba0d9810439f11299463f2294, type: 3}
-  <MaximumEvolutionStageLevelInPreview>k__BackingField: 4
+  <MaximumEvolutionStageLevelInPreview>k__BackingField: 3

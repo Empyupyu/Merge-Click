@@ -75,9 +75,19 @@ public class MergeSystem : GameSystem
         LeanPool.Despawn(animal);
     }
 
+    private const string SAVE_DATA_KEY = "SaveDataKey";
+
     private void AddScorePoint(int value)
     {
         _game.Score += value;
-        _save.RecordScore = _game.Score > _save.RecordScore ? _game.Score : _save.RecordScore;
+
+        if(_game.Score > _save.RecordScore)
+        {
+            _save.RecordScore = _game.Score > _save.RecordScore ? _game.Score : _save.RecordScore;
+            //var save = JsonUtility.ToJson(_save);
+            //SaveUtility.Instance().Save(SAVE_DATA_KEY, save);
+            PlayerPrefs.SetInt(SAVE_DATA_KEY, _save.RecordScore);
+            PlayerPrefs.Save();
+        }
     }
 }

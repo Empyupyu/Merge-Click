@@ -45,6 +45,7 @@ public class PreviewAnimalSpawnerSystem : GameSystem
         var newAnimal = LeanPool.Spawn(animalPrefab, positionByIndex, Quaternion.Euler(0, 180, 0));
         newAnimal.ResetToOrigin();
 
+        newAnimal.transform.DORewind();
         newAnimal.transform.DOScale(_animalConfigData.AnimalsInPreviewScale.x, _animalConfigData.SortingDuration).From(Vector3.zero);
 
         _game.PreviewAnimals.Enqueue(newAnimal);
