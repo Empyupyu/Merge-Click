@@ -4,4 +4,5 @@
 public class SaveData
 {
     public int RecordScore;
+    public int LevelIndex;
 }

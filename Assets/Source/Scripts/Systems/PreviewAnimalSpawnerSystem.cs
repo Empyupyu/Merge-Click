@@ -7,6 +7,8 @@ public class PreviewAnimalSpawnerSystem : GameSystem
 {
     [Inject] private readonly AnimalConfigData _animalConfigData;
 
+    private Quaternion _originAnimalRotation = Quaternion.Euler(0, 180, 0);
+
     public override void OnAwake()
     {
         _game.OnAnimalDeselectedSingal.AddListener(Sorting);
@@ -40,15 +42,20 @@ public class PreviewAnimalSpawnerSystem : GameSystem
     {
         var evolutions = _animalConfigData.EvolutionStage;
         var animalPrefab = evolutions[Random.Range(0, _animalConfigData.MaximumEvolutionStageLevelInPreview)].Animal;
-
         var positionByIndex = GetPositionOffsetByIndex(_game.PreviewAnimals.Count);
-        var newAnimal = LeanPool.Spawn(animalPrefab, positionByIndex, Quaternion.Euler(0, 180, 0));
-        newAnimal.ResetToOrigin();
 
-        newAnimal.transform.DORewind();
-        newAnimal.transform.DOScale(_animalConfigData.AnimalsInPreviewScale.x, _animalConfigData.SortingDuration).From(Vector3.zero);
+        var newAnimal = LeanPool.Spawn(animalPrefab, positionByIndex, _originAnimalRotation);
+
+        newAnimal.ResetToOrigin();
+        SpawnAnimation(newAnimal.transform);
 
         _game.PreviewAnimals.Enqueue(newAnimal);
+    }
+
+    private void SpawnAnimation(Transform animal)
+    {
+        animal.DORewind();
+        animal.DOScale(_animalConfigData.AnimalsInPreviewScale.x, _animalConfigData.SortingDuration).From(Vector3.zero);
     }
 
     private Vector3 GetPositionOffsetByIndex(int index)

@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Lean.Pool;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,11 @@ public class MergeSystem : GameSystem
     public event Action OnMergeEvent;
 
     [Inject] private readonly MergeConfigData _mergeConfigData;
+
+    private Vector3 _centerBetweenAnimals;
+    private bool _canEvolution;
+    private Animal _select;
+    private Animal _target;
 
     public override void OnAwake()
     {
@@ -21,13 +27,20 @@ public class MergeSystem : GameSystem
         target.Rigidbody.isKinematic = true;
     }
 
-    private void Merge(Animal collision, Animal target)
+    private async void Merge(Animal select, Animal target)
     {
-        DisablePhysicToAnimal(collision);
-        DisablePhysicToAnimal(target);
-        ScalingAnimation(target.transform);
-        ScalingAnimation(collision.transform);
-        MergingAnimaion(collision, target);
+        _select = select;
+        _target = target;
+
+        DisablePhysicToAnimal(_select);
+        DisablePhysicToAnimal(_target);
+        ScalingAnimation(_target.transform);
+        ScalingAnimation(_select.transform);
+        GetCenterBetweenAnimals();
+        MovingAnimation(_target.transform);
+        await MovingAnimation(_select.transform);
+
+        MergeCompleted();
     }
 
     private void ScalingAnimation(Transform target)
@@ -35,39 +48,25 @@ public class MergeSystem : GameSystem
         target.DOScale(0, _mergeConfigData.MergeScalingDuration).SetEase(Ease.InBack);
     }
 
-    private void MergingAnimaion(Animal collision, Animal target)
+    private Task MovingAnimation(Transform target)
     {
-        Vector3 centerByTwoAnimal = (collision.transform.position + target.transform.position) / 2;
+       return _target.transform.DOMove(_centerBetweenAnimals, _mergeConfigData.MergeMoveDuration).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+    }
 
-        target.transform.DOMove(centerByTwoAnimal, _mergeConfigData.MergeMoveDuration).SetEase(Ease.OutBack);
-        collision.transform.DOMove(centerByTwoAnimal, _mergeConfigData.MergeMoveDuration).SetEase(Ease.OutBack).OnComplete(() =>
-        {
-            BackToPool(collision);
-            BackToPool(target);
+    private void GetCenterBetweenAnimals()
+    {
+        _centerBetweenAnimals = (_select.transform.position + _target.transform.position) / 2;
+    }
 
-            int nextEvolutionStageID = collision.ID + 1;
-            bool canEvolution = nextEvolutionStageID < _game.EvolutionStages.Count;
-            int rewardScore = canEvolution ? _mergeConfigData.RewardNormalScore : _mergeConfigData.RewardLastEvolutionScore;
+    private void MergeCompleted()
+    {
+        BackToPool(_select);
+        BackToPool(_target);
+        CreateNewAnimalStage();
+        CreateMergeEffects();
+        AddScorePoint();
 
-            if (canEvolution)
-            {
-                EvolutionStage evolution = _game.EvolutionStages[nextEvolutionStageID];
-                var evolutionAnimal = LeanPool.Spawn(evolution.Animal, centerByTwoAnimal, Quaternion.Euler(0, 180, 0));
-
-                evolutionAnimal.Initialize(nextEvolutionStageID);
-                evolutionAnimal.ResetToOrigin();
-
-                evolutionAnimal.Collider.isTrigger = false;
-                evolutionAnimal.Rigidbody.isKinematic = false;
-            }
-
-            LeanPool.Spawn(_mergeConfigData.MergeEffect, centerByTwoAnimal + _mergeConfigData.MergeEffectOffset, Quaternion.identity);
-            AudioSource.PlayClipAtPoint(_mergeConfigData.MereSoundEffect, centerByTwoAnimal);
-
-            AddScorePoint(rewardScore);
-
-            OnMergeEvent?.Invoke();
-        });
+        OnMergeEvent?.Invoke();
     }
 
     private void BackToPool(Animal animal)
@@ -75,19 +74,37 @@ public class MergeSystem : GameSystem
         LeanPool.Despawn(animal);
     }
 
-    private const string SAVE_DATA_KEY = "SaveDataKey";
-
-    private void AddScorePoint(int value)
+    private void CreateNewAnimalStage()
     {
+        int nextEvolutionStageID = _select.ID + 1;
+        _canEvolution = nextEvolutionStageID < _game.EvolutionStages.Count;
+
+        if (!_canEvolution) return;
+
+        EvolutionStage evolution = _game.EvolutionStages[nextEvolutionStageID];
+        var evolutionAnimal = LeanPool.Spawn(evolution.Animal, _centerBetweenAnimals, Quaternion.Euler(0, 180, 0));
+
+        evolutionAnimal.Initialize(nextEvolutionStageID);
+        evolutionAnimal.ResetToOrigin();
+
+        evolutionAnimal.Collider.isTrigger = false;
+        evolutionAnimal.Rigidbody.isKinematic = false;
+    }
+
+    private void CreateMergeEffects()
+    {
+        LeanPool.Spawn(_mergeConfigData.MergeEffect, _centerBetweenAnimals + _mergeConfigData.MergeEffectOffset, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(_mergeConfigData.MereSoundEffect, _centerBetweenAnimals);
+    }
+
+    private void AddScorePoint()
+    {
+        int value = _canEvolution ? _mergeConfigData.RewardNormalScore : _mergeConfigData.RewardLastEvolutionScore;
         _game.Score += value;
 
-        if(_game.Score > _save.RecordScore)
-        {
-            _save.RecordScore = _game.Score > _save.RecordScore ? _game.Score : _save.RecordScore;
-            //var save = JsonUtility.ToJson(_save);
-            //SaveUtility.Instance().Save(SAVE_DATA_KEY, save);
-            PlayerPrefs.SetInt(SAVE_DATA_KEY, _save.RecordScore);
-            PlayerPrefs.Save();
-        }
+        if (_game.Score <= _save.RecordScore) return;
+
+        _save.RecordScore = _game.Score;
+        SaveUtility.Instance().Save(_save);
     }
 }

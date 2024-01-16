@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class GameOverSystem : GameSystem
 {
     public event Action OnGameOverEvent;
+
     private Timer _gameOverTimer;
+    private float _timer = 1.5f;
 
     public override void OnAwake()
     {
@@ -22,7 +24,7 @@ public class GameOverSystem : GameSystem
     {
         if (!IsAnimal(target)) return;
 
-        _gameOverTimer = new Timer(1.5f);
+        _gameOverTimer = new Timer(_timer);
         _game.ActivateTimerSingal.Dispatch(_gameOverTimer, true);
         _game.TimerCompletedSingal.AddListener(GameOver);
     }

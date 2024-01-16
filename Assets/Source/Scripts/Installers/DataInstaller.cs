@@ -1,8 +1,6 @@
-using UnityEngine;
 using Zenject;
 public class DataInstaller : MonoInstaller
 {
-    //private const string SAVE_DATA_KEY = "SaveDataKey";
     private SaveData _saveData;
 
     public override void InstallBindings()
@@ -14,21 +12,10 @@ public class DataInstaller : MonoInstaller
 
     private void LoadSaveDatas()
     {
-        //var save = SaveUtility.Instance();
-        //if (!save.HasSave(SAVE_DATA_KEY)) return;
         _saveData = new();
 
-        if (!PlayerPrefs.HasKey("SaveDataKey")) return;
-        
-        _saveData.RecordScore = PlayerPrefs.GetInt("SaveDataKey");
-        //_saveData = JsonUtility.FromJson<SaveData>(save.Load(SAVE_DATA_KEY));
+        if (!SaveUtility.Instance().HasSave()) return;
 
-        //if (_saveData == null) _saveData = new();
+        _saveData = SaveUtility.Instance().Load();
     }
-
-    //private void OnDestroy()
-    //{
-    //    var save = JsonUtility.ToJson(_saveData);
-    //    SaveUtility.Instance().Save(SAVE_DATA_KEY, save);
-    //}
 }

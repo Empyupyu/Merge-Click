@@ -16,5 +16,4 @@ public class GameData
     public MergingSingal MergingSingal = Signals.Get<MergingSingal>();
     public TimerCompletedSingal TimerCompletedSingal = Signals.Get<TimerCompletedSingal>();
     public EnableTimerSingal ActivateTimerSingal = Signals.Get<EnableTimerSingal>();
-    
 }

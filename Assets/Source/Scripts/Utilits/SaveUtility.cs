@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SaveUtility
 {
+    private const string SAVE_DATA_KEY = "SaveDataKey";
+
     private static SaveUtility _instance;
 
     public static SaveUtility Instance()
@@ -14,19 +16,22 @@ public class SaveUtility
         return _instance;
     }
 
-    public void Save(string key, string value)
+    public void Save(SaveData saveData)
     {
-        PlayerPrefs.SetString(key, value);
+        var save = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString(SAVE_DATA_KEY, save);
         PlayerPrefs.Save();
     }
 
-    public string Load(string key)
+    public SaveData Load()
     {
-        return PlayerPrefs.GetString(key);
+        var save = PlayerPrefs.GetString(SAVE_DATA_KEY);
+        SaveData _saveData = JsonUtility.FromJson<SaveData>(save);
+        return _saveData;
     }
 
-    public bool HasSave(string key)
+    public bool HasSave()
     {
-        return PlayerPrefs.HasKey(key);
+        return PlayerPrefs.HasKey(SAVE_DATA_KEY);
     }
 }
